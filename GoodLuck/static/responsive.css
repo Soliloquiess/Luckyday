@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+a{
+    text-decoration: none;
+}
+header{
+    overflow: hidden;
+    background-color: pink;
+    padding: 20px;
+}
+
+.logo{
+    float: left;
+    font-size: 20px;
+    color:white;
+
+}
+nav{
+    float: right;
+}
+nav a{
+    padding: 0 5px;
+    font-size: 20px;
+    color:white;
+}
+.gnb_menu{
+    display: none;
+}
+footer{
+    height: 50px;
+    line-height: 50px; 
+    text-align: center;
+    background-color: #ccc;
+    font-size: 14px;
+    color: #000000;
+}
+section{
+    max-width: 900px;
+    margin: 50px auto; /*가운데 정렬*/
+}
+.list{
+    overflow: hidden;
+    margin: -5px;
+}
+.list li{
+    float: left;
+    width: 20%;
+  
+}
+.inner{
+    display: block;
+    border: 1px solid black;
+    margin: 5px;
+}
+.thumb img{
+    width: 100%;
+    height: auto;
+}
+.title{
+    overflow: hidden;
+    padding : 5px 0;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 14px;
+    color: #555555;
+    text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 768px){
+    header{
+        background-color: lightseagreen;
+    }
+    .logo{
+        width: 100px;
+        float: none;
+        display: block;
+        margin:  0 auto;
+        font-size: 40px;
+        text-align: center;
+
+    }
+    nav{
+        overflow-x: auto;
+        overflow-y: hidden;
+        margin-top:20px;
+        float: none;
+        white-space: nowrap;
+    }
+    nav a{
+     font-size:25px;   
+    }
+    footer{
+        background-color: lightsalmon;
+        color: white;
+    }
+    .list li{
+        width: 25%; 
+    }
+    .inner{
+        margin: 4px;
+        position: relative;
+    }
+    .list{
+        margin:-4px;
+    }
+    .title{
+        position: absolute;
+        left: 0; right: 0; bottom:0;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding:10px 0;
+        color: white;
+    }
+}
+
+@media screen and (max-width: 375px){
+    header{
+        padding: 10px 0;
+        background-color: skyblue;
+    }
+    nav{
+        position: absolute;
+        top: 60px;
+        left: 0px;
+        bottom: 0px;
+        z-index: 10;
+        display: none;
+        width: 200px;
+        background-color: lightslategray;
+        margin: 0;
+    }
+    nav a{
+        display: block;
+        padding: 20px 10px;
+        font-size: 20px;
+        border-bottom: 1px solid white;
+
+    }
+    .gnb_menu{
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        display: block;
+        width: 40px;
+        height: 35px;
+        font-size: 1px;
+        color: transparent; /*투명*/
+
+        /*햄버거 모양 만들기(이미지도 가능)*/
+        background: linear-gradient(#ffffff 50%, transparent 50%);
+        background-size: 100% 10px;
+    }
+  
+}
