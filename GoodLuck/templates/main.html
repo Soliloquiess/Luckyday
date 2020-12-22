@@ -1,138 +1,238 @@
-<!DOCTYPE html>
-<html lang="kr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-		<title>운이조타: 운전할 때 이거 조심히 타세요!</title>
-		<meta name="author" content="Codrops" />
-		<link rel="stylesheet" type="text/css" href="../static/style.css" />
-
-		<!--search 영역-->
-		<link rel="preconnect" href="https://fonts.gstatic.com">
-		<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">		
-		<link rel="stylesheet" type="text/css" href="../static/search.css" />
-		<script>document.documentElement.className = 'js';</script>
-		<!--search 영역-->
-	</head>
-     <body>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width initial-scale=1.0">
-        <script src="http://code.jquery.com/jquery-1.7.min.js" ></script>
-        <title>반응형 웹</title>
-        <link rel ="stylesheet" href="./reset.css">
-        <link rel="stylesheet" href="./responsive.css">
-    
-    
-        <div class="wrap">
-            <header>
-                    <a >SEOUL</a>
-                </nav>
-            </header>
-            <section>
-                <div id = "Seoul">
-                    <h1>서울</h1>
-                    <h2 class="sdate">  </h2>
-                    <div class="stemp">현재 온도: </div>
-                    <div class="slowtemp">최저 온도: </div>
-                    <div class="shightemp">최고 온도: </div>
-                    <div class="sicon">아이콘 :  </div>
-                    </div> </div>
-            </section>
-            <footer>
-            </footer>
+{% extends 'layout.html' %}
+{% block content %}
+<div class="content">
+    <section id="visual"><!--시각화탭-->
+    {% if search in gus %}
+        <h3>{{search}} 교통사고 요인</h3>					
+        <div class="mediabox">
+            <img src="/weather-plot-{{search}}.png" onerror="this.src='../static/img/img_error2.png'" height='300'/>
+            <h3>날씨 상태에 따른 교통사고 원인</h3>
+            <p></p>
         </div>
-        <script src="../static/responsive_weather.js"></script>
-        <script src="../static/toggle.js"></script>
-    </body>
-	<body>
-		<div class="container">
-			<header class="clearfix">
-				<span>운이조타</span>
-				<h1>운전할 때 이거 조심히 타세요!</h1>
-				<nav>
-					<!--search 영역-->
-					<svg class="hidden"><!-- 검색 아이콘 & 닫는 아이콘 -->
-						<defs>
-							<symbol id="icon-search" viewBox="0 0 24 24">
-								<title>search</title>
-								<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-							</symbol>
-							<symbol id="icon-cross" viewBox="0 0 24 24">
-								<title>cross</title>
-								<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-							</symbol>
-						</defs>
-					</svg>
-					<!--search-->
-					<div class="search">
-						<button id="btn-search-close" class="btn btn--search-close" aria-label="Close search form"><svg class="icon icon--cross"><use xlink:href="#icon-cross"></use></svg></button>
-						<form class="search__form" action="">
-							<input id="search-input" class="search__input" name="search" type="search" placeholder="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-							<button class="btn btn--search"><svg class="icon icon--search"><use xlink:href="#icon-search"></use></svg></button>
-						</form>
-						<div class="search__suggestion">
-							<h3>다음 중 살고 계신 구를 입력해주세요!</h3>
-							<p>
-							{% for gu in gus %}
-							#{{gu}}
-							{% endfor %}
-							</p>
-						</div>
-					</div>
-					<!--search 영역-->
+        <div class="mediabox">
+            <img src="/illegal-plot-{{search}}.png" onerror="this.src='../static/img/img_error2.png'" height='300'/>
+            <h3>법규 위반 종류에 따른 교통 사고 원인</h3>
+            <p></p>
+        </div>
+        <div class="mediabox">
+            <img src="/roadInfo-plot-{{search}}.png" onerror="this.src='../static/img/img_error2.png'" height='300'/>
+            <h3>도로상태에 따른 교통사고 원인</h3>
+            <p></p>
+    {% elif search == '' %}	<!--검색하기 전에 뜰 화면-->	
+        <h3>운이조타 서비스에 접속해주셔서 감사합니다!</h3>
+        <h4>
+        현재 온도는 <span class="stemp"></span>도 이고, 현재 날씨는 <span class="sicon"></span>입니다!
+        </h4>
+        <img src="../static/img/main.jpg" alt="환영" height='300'/>
+        <p>
+            안전한 운전을 위해
+            아래 리스트에 있는 이름을 입력해보세요!
+        </p>
+        <p>
+            {% for item in gus %}
+            # {{ item }}
+            {% endfor %}
+        </p>
+    {% else %}
+        <h3>ㅠㅠ슬픈 소식이 있어요...;(</h3>
+        <img src="../static/img/sad_news.jpg" alt="슬픈 소식" height='300'/>
+        <p>
+            아직 서비스를 하지 않고 있는 지역이거나
+            잘못 된 이름을 입력하신 것 같습니다.
+            아래 리스트에 있는 이름만 입력해주세요!
+        </p>
+        <p>
+            {% for item in gus %}
+            # {{ item }}
+            {% endfor %}
+        </p>
+    {% endif %}
+    </section>
+    <section id="about-us">
+        <h3>About us</h3>
+        <p>국민들의 교통 사고 위험을 줄이고자 인공지능에 관심이 많은 다섯 명이 뭉쳐 사이트를 만들었습니다!</p>
 
-					<!--span><img src="../static/img/temp.jpg" width=20%/></span-->
-				</nav>
-			</header>	
-			<div id="tabs" class="tabs">
-				<nav>
-					<ul>
-						<li><a href="#visual" class="icon-car"><span>메인화면</span></a></li>
-						<li><a href="#about-us" class="icon-home"><span>About us</span></a></li>
-					</ul>
-				</nav>
-				<div class="content">
-					<section id="visual"><!--시각화탭-->
-						<div class="mediabox">
-							<img src="../static/img/temp.jpg" alt="여기에 그래프" />
-							<h3>날씨 상태에 따른 교통사고 원인</h3>
-							<p>맑을 때 교통 사고 건수가 가장 많은 걸로 나타났다.</p>
-						</div>
-						<div class="mediabox">
-							<img src="../static/img/temp.jpg" alt="그래프 이미지" />
-							<h3>법규 위반 종류에 따른 교통 사고 원인</h3>
-							<p>여기는 그래프 설명</p>
-						</div>
-						<div class="mediabox">
-							<img src="../static/img/temp.jpg" alt="그래프 이미지" />
-							<h3>도로상태에 따른 교통사고 원인</h3>
-							<p>왼쪽에 그래프 사진 넣기.</p>
-						</div>
-					</section>
-					<section id="about-us"><!--소개탭-->
-							<h3>About us</h3>
-							<p>국민들의 교통 사고 위험을 줄이고자 인공지능에 관심이 많은 다섯명이 뭉쳐 만든 사이트</p>
-						<div class="mediabox">
-							<img src="../static/img/dain.jpg" alt="img02" />
-							<h3>김다인</h3>
-							<p>
-								팀 내 매력을 담당하고 있다
-								<li>데이터 수집설계 및 전처리</li>
-								<li>풀 스택 웹 구현</li>
-							</p>
-						</div>
-					</section>
-				</div><!-- /content -->
-			</div><!-- /tabs -->
-		</div>
-		<!--search 영역-->
-		<script src="../static/search.js"></script>
-		<!--search 영역-->
+        <div class="mediabox">
+            <img src="../static/img/dain2.jpg" alt="img01" />
+            <h3>김다인</h3>
+            <p>
+                팀 내 리더로써 팀을 이끌고 격려하는 사람
+                <li>데이터 수집설계 및 전처리</li>
+                <li>풀 스택 웹 구현</li>
+            </p>
+        </div>
+        <div class="mediabox">
+            <img src="../static/img/donghyeon.jpg" alt="img02" />
+            <h3>구동현</h3>
+            <p>
+                팀이 무너지지 않도록 지지해주는, 우리 팀의 지지대
+                <li>데이터 수집설계 및 전처리</li>
+                <li>데이터 분석 및 시각화</li>
+            </p>
+        </div>
+        <div class="mediabox">
+            <img src="../static/img/donghui.png" alt="img03" />
+            <h3>최동휘</h3>
+            <p>
+                팀이 힘들고 지칠 때 쉬어가게 해주는, 팀의 쉬는 시간같은 존재
+                <li>데이터 수집설계 및 전처리</li>
+                <li>데이터 분석 및 시각화</li>
+            </p>
+        </div>
+        <div class="mediabox">
+            <img src="../static/img/sewon.jpg" alt="img04" />
+            <h3>민세원</h3>
+            <p>
+                팀이 길을 잃었을 때 길을 찾아주는, 팀의 등대지기
+                <li>데이터 수집설계 및 전처리</li>
+                <li>데이터 분석 및 시각화</li>
+            </p>
+        </div>					
+        <div class="mediabox">
+            <img src="../static/img/yanghun.jpg" alt="img05" width=500 />
+            <h3>조양훈</h3>
+            <p>
+                팀의 평온함을 찾아주는 귀여움과 균형의 수호자
+                <li>API를 이용한 웹 기능 구현</li>
+                <li>풀 스택 웹 구현</li>
+            </p>
+        </div>	
+    </section>
+    
+    <section id="ai-analysis">
+        <h3>인공지능 분석 페이지</h3>
+        <p>인공지능 분석 페이지 글 내용</p>
+        <!-- ppt 1페이지 -->
+        <div class="mediabox">
+            <img src="../static/img/graph/f1.png" alt="graph01" />
+            <h3>그래프1</h3>
+            <p>2017년 ~ 2019년(3년)</p>
+            <p>서울시 교통사고 가해 운전자 연령</p>
+            <p>*0세: nan,공백 데이터의 합</p>
+            <p>*98세: 98세+98세 이상</p>
+        </div>
+        <div class="mediabox">
+            <img src="../static/img/graph/f2.png" alt="graph02" />
+            <h3>그래프2</h3>
+            <p>2017년 ~ 2019년(3년)</p>
+            <p>서울시 교통사고 피해 운전자 연령</p>
+            <p>*0세: nan,공백 데이터의 합</p>
+            <p>*98세: 98세+98세 이상</p>
+        </div>
+        <div class="mediabox">
+            <h3></h3>
+            <p>가해 운전자 60대, 70대</p>
+            <p>피해 운전자 20대 ~ 70대까지 고르게 분포</p>
+            <p></p>
+            <p></p>
+            <img src="../static/img/temp.jpg" style="visibility:hidden"/>
+        </div>
+        <!-- ppt 1페이지 끝 -->
 
-		<script src="../static/Tabs.js"></script>
-		<script>
-			new CBPFWTabs( document.getElementById( 'tabs' ) );
-		</script>
-	</body>
-</html>
+        <!-- ppt 2페이지 -->
+        <div class="mediabox">
+            <img src="../static/img/graph/f3.png" alt="graph03" />
+            <h3>그래프3</h3>
+            <p>2017년 ~ 2019년(3년)</p>
+            <p>서울시 교통사고 가해 운전자 성별 분포</p>
+            <p></p>
+            <p></p>
+        </div>
+        <div class="mediabox">
+            <img src="../static/img/graph/f4.png" alt="graph04" />
+            <h3>그래프4</h3>
+            <p>2017년 ~ 2019년(3년)</p>
+            <p>서울시 교통사고 피해 운전자 성별 분포</p>
+            <p></p>
+            <p></p>
+        </div>
+        <div class="mediabox">
+            <h3></h3>
+            <p>가해운전자/피해운전자</p>
+            <p>두 가지 경우 모두 </p>
+            <p>남자의 성별이</p>
+            <p>압도적으로 많음</p>
+            <img src="../static/img/temp.jpg" style="visibility:hidden"/>
+        </div>
+        <!-- ppt 2페이지 끝 -->
+
+        <!-- ppt 3페이지 -->
+        <div class="mediabox">
+            <img src="../static/img/graph/f5.png" alt="graph05" />
+            <h3>그래프5</h3>
+            <p>2017년 ~ 2019년(3년)</p>
+            <p>서울시 교통사고 가해 운전자 상해정도</p>
+            <p></p>
+            <p></p>
+        </div>
+        <div class="mediabox">
+            <img src="../static/img/graph/f6.png" alt="graph06" />
+            <h3>그래프6</h3>
+            <p>2017년 ~ 2019년(3년)</p>
+            <p>서울시 교통사고 피해 운전자 상해정도</p>
+            <p></p>
+            <p></p>
+        </div>
+        <div class="mediabox">
+            <h3>가해운전자</h3>
+            <p>“상해없음”이 독보적으로 </p>
+            <p>높은 수치를 보임</p>
+            <h3></h3>
+            <h3>피해운전자</h3>
+            <p>“경상”은 독보적으로 높은 수치를 보임</p>
+            <p>“중상” 역시 적은 수치는 아님</p>
+            <img src="../static/img/temp.jpg" height="150" style="visibility:hidden"/>
+        </div>
+        <!-- ppt 3페이지 끝 -->
+
+        <!-- ppt 4페이지 -->
+        <div class="mediabox">
+            <img src="../static/img/graph/f7.png" alt="graph07" />
+            <h3>그래프7</h3>
+            <p>2017년 ~ 2019년(3년)</p>
+            <p>서울시 구의 요일 별 실제 사고 건수</p>
+            <p></p>
+            <p></p>
+        </div>
+        <div class="mediabox">
+            <h3 style="text-align:center">2017년 + 2018년 + 2019년</h3>
+            <h3 style="text-align:center">총 3년간의 실제 사고 건수</h3>
+            <h3></h3>
+            <h3 style="text-align:center"><=</h3>
+            <h3 style="text-align:center">요일 별 시각화</h3>       
+        </div>
+        <div class="mediabox">
+            <img src="../static/img/graph/f7.png" style="visibility:hidden" />
+            <img src="../static/img/graph/f7.png" style="visibility:hidden" />
+        </div>
+        <!-- ppt 4페이지 끝 -->
+
+        <!-- ppt 5페이지 -->
+        <div class="mediabox">
+            <img src="../static/img/graph/f8.png" alt="graph08" />
+            <h3>그래프8</h3>
+            <p>서울시 구의 시간대 별 사고 건수로</p>
+            <p>2020년도 사고 건수 예측하기</p>
+            <p></p>
+            <p></p>
+        </div>
+        <div class="mediabox">
+            <h3>2018년도 구 별 전체_사고 건수</h3>
+            <h3 style="text-align:center">+</h3>
+            <h3>2019년도 구 별 전체_사고 건수</h3>
+            <h3 style="text-align:center">=</h3>
+            <h3>2020년도 구 별 사고 건수 예측</h3>
+        </div>
+        <div class="mediabox">
+            <img src="../static/img/graph/f8.png" style="visibility:hidden" />
+            <h3></h3>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+        <!-- ppt 5페이지 끝 -->
+
+    </section>
+</div><!-- /content -->
+{% endblock %}

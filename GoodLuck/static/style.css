@@ -60,7 +60,7 @@ a:hover {
 }
 
 
-/* 
+
 @media screen and (max-width: 55em) {
 
 	.container > header h1,
@@ -80,7 +80,7 @@ a:hover {
 	.container > header > span {
 		text-indent: 30px;
 	}
-} */
+} 
 
 /* ---------------------------------- */
 /* 바디 부분 */
@@ -177,13 +177,24 @@ a:hover {
 	margin: -0.25em 0.4em 0 0;
 }
 
-.icon-car:before {
-	content: "\e603";
-}
-
 .icon-home:before {
-	content: "\e604";
-}
+	content: "\e900";
+  }
+  .icon-pie-chart:before {
+	content: "\e99a";
+  }
+  .icon-stats-dots:before {
+	content: "\e99b";
+  }
+  .icon-stats-bars:before {
+	content: "\e99c";
+  }
+  .icon-question:before {
+	content: "\ea09";
+  }
+  .icon-info:before {
+	content: "\ea0c";
+  }
 
 /* 탭 아래 부분 */
 /* 각 탭의 Content */

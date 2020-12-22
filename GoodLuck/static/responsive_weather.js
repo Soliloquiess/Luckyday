@@ -1,70 +1,54 @@
-$.getJSON('http://api.openweathermap.org/data/2.5/group?id=1835848,5815135,2643743&APPID=8da41a26ad86b639aad96ecff8e613f9&units=metric  ', function(data){
-       
-    function getWorldTime(tzOffset) { // 24시간제
-  var now = new Date();
-  var tz = now.getTime() + (now.getTimezoneOffset() * 60000) + (tzOffset * 3600000);
-  now.setTime(tz);
- 
- 
-  var s =
-    leadingZeros(now.getFullYear(), 4) + '-' +
-    leadingZeros(now.getMonth() + 1, 2) + '-' +
-    leadingZeros(now.getDate(), 2) + ' ' +
- 
-    leadingZeros(now.getHours(), 2) + ':' +
-    leadingZeros(now.getMinutes(), 2) 
- 
-  return s;
-}
-
-function leadingZeros(n, digits) {
-  var zero = '';
-  n = n.toString();
- 
-  if (n.length < digits) {
-    for (i = 0; i < digits - n.length; i++)
-      zero += '0';
-  }
-  return zero + n;
-}
-
- //현재 날짜 뽑아서 출력
-   var $sDate = getWorldTime(+9); //서울 시간
-   var $wDate = getWorldTime(-4); 
-   var $lDate = getWorldTime(+1); 
-
-   //서울 
-   var $sminTemp = data.list[0].main.temp_min;
-   var $smaxTemp = data.list[0].main.temp_max;
-   var $sTemp = data.list[0].main.temp;
-   var $sIcon = data.list[0].weather[0].icon;
-    
-
-    //alert($.now());//현재 시간을 출력하는 방법
-    //alert(new Date(Date.now())); 형식[Wed Jul 15 2020 14:11:30 GMT+0900 (대한민국 표준시)]
-    
+$.getJSON('http://api.openweathermap.org/data/2.5/group?id=1835848,5815135,2643743&APPID=8da41a26ad86b639aad96ecff8e613f9&units=metric  ', 
+function(data){
 
   
 
-   
+  //서울 
+  var $sTemp = data.list[0].main.temp;
+  var $sId = data.list[0].weather[0].id;
+  var $sIcon = data.list[0].weather[0].icon;
+  var $sMain = data.list[0].weather[0].main;
+  var $sDesc = data.list[0].weather[0].description;
 
-   
+  //A.appendTo(B) B뒤어 A를 붙이기
+  //A.append(B) A뒤어 B를 붙이기
+  //A.prependTo(B) B앞에 A를 붙이기
+  //A.prepend(B) A앞에 B를 붙이기
 
-   //A.appendTo(B) B뒤어 A를 붙이기
-   //A.append(B) A뒤어 B를 붙이기
-   //A.prependTo(B) B앞에 A를 붙이기
-   //A.prepend(B) A앞에 B를 붙이기
+  //서울 출력
+  $('.stemp').prepend($sTemp);
+  $('.sicon').prepend('<img src ="http://openweathermap.org/img/wn/'+$sIcon+'.png"/>');
+  $('.sMain').append($sMain);
+  $('.sDesc').append($sDesc);
+  $('.sId').append($sId);
 
-    //날짜 출력
-   $('.sdate').prepend($sDate);
-   $('.wdate').prepend($wDate);
-   $('.ldate').prepend($lDate);
-   //서울 출력
-    $('.stemp').append($sTemp);
-    $('.slowtemp').append($sminTemp);
-    $('.shightemp').append($smaxTemp);
-     //<img src =" http://openweathermap.org/img/wn/10d@2x.png"/>
-     $('.sicon').append('<img src =" http://openweathermap.org/img/wn/'+$sIcon+'.png"/>');
-
+  // function wDescEngToKor(sId) {
+  //   var w_id_arr = [201,200,202,210,211,212,221,230,231,232,
+  //   300,301,302,310,311,312,313,314,321,500,
+  //   501,502,503,504,511,520,521,522,531,600,
+  //   601,602,611,612,615,616,620,621,622,701,
+  //   711,721,731,741,751,761,762,771,781,800,
+  //   801,802,803,804,900,901,902,903,904,905,
+  //   906,951,952,953,954,955,956,957,958,959,
+  //   960,961,962];
+  //   var w_kor_arr = ["가벼운 비를 동반한 천둥구름","비를 동반한 천둥구름","폭우를 동반한 천둥구름","약한 천둥구름",
+  //   "천둥구름","강한 천둥구름","불규칙적 천둥구름","약한 연무를 동반한 천둥구름","연무를 동반한 천둥구름",
+  //   "강한 안개비를 동반한 천둥구름","가벼운 안개비","안개비","강한 안개비","가벼운 적은비","적은비",
+  //   "강한 적은비","소나기와 안개비","강한 소나기와 안개비","소나기","악한 비","중간 비","강한 비",
+  //   "매우 강한 비","극심한 비","우박","약한 소나기 비","소나기 비","강한 소나기 비","불규칙적 소나기 비",
+  //   "가벼운 눈","눈","강한 눈","진눈깨비","소나기 진눈깨비","약한 비와 눈","비와 눈","약한 소나기 눈",
+  //   "소나기 눈","강한 소나기 눈","박무","연기","연무","모래 먼지","안개","모래","먼지","화산재","돌풍",
+  //   "토네이도","구름 한 점 없는 맑은 하늘","약간의 구름이 낀 하늘","드문드문 구름이 낀 하늘","구름이 거의 없는 하늘",
+  //   "구름으로 뒤덮인 흐린 하늘","토네이도","태풍","허리케인","한랭","고온","바람부는","우박","바람이 거의 없는",
+  //   "약한 바람","부드러운 바람","중간 세기 바람","신선한 바람","센 바람","돌풍에 가까운 센 바람","돌풍",
+  //   "심각한 돌풍","폭풍","강한 폭풍","허리케인"];
+  //   for(var i=0; i<w_id_arr.length; i++) {
+  //   if(w_id_arr[i]==w_id) {
+  //   return w_kor_arr[i];
+  //   break;
+  //   }
+  //   }
+  //   return "none";
+  //   }
 
 });
